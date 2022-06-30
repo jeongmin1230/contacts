@@ -76,58 +76,12 @@ class MainActivity : AppCompatActivity() {
         ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_CONTACTS), 99)
     }
 
-    // 쓰기 다이얼로그 생성하는 함수
-    private fun writeDialog() {
-        // 대화상자 생성
-        val builder = AlertDialog.Builder(this)
-
-        // 대화상자에 텍스트 입력 필드 추가
-        val tvName = TextView(this)
-        tvName.text = "Name"
-        val tvNumber = TextView(this)
-        tvNumber.text = "Number"
-        val etName = EditText(this)
-        etName.isSingleLine = true
-        val etNumber = EditText(this)
-        etNumber.isSingleLine = true
-        val mLayout = LinearLayout(this)
-        mLayout.orientation = LinearLayout.VERTICAL
-        mLayout.setPadding(16)
-        mLayout.addView(tvName)
-        mLayout.addView(etName)
-        mLayout.addView(tvNumber)
-        mLayout.addView(etNumber)
-        builder.setView(mLayout)
-
-        builder.setTitle("데이터 추가")
-        builder.setPositiveButton("추가") { dialog, which ->
-            // EditText 에서 문자열을 가져와 hashMap 으로 만듦
-            val data = hashMapOf(
-                "name" to etName.text.toString(),
-                "number" to etNumber.text.toString()
-            )
-            // Contacts 컬렉션에 data 를 자동 이름으로 저장
-            db.collection("contacts")
-                .add(data)
-                .addOnSuccessListener {
-                    // 성공할 경우
-                    Toast.makeText(this, "데이터가 추가되었습니다", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { exception ->
-                    // 실패할 경우
-                    Log.w(TAG, "Error getting documents: $exception")
-                }
-        }
-        builder.setNegativeButton("취소") { dialog, which ->
-
-        }
-        builder.show()
-    }
 
 /* --------------------onClick 함수-------------------- */
 
-    fun onClickWrite(view: View) {
-        writeDialog()
+    fun onClickRegister(view: View) {
+        val intent = Intent(this, RegisterActivity::class.java)
+        startActivity(intent)
     }
 
     fun onClickRefresh(view: View) {
@@ -152,7 +106,8 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(TAG, "onClick Call ImageButton")
 
-        val intent = Intent(Intent.ACTION_DIAL)
-//        intent.data = Uri.parse("01086991406)
+//        val intent = Intent(Intent.ACTION_DIAL)
+//        intent.data = Uri.parse("01086991406")
+//        startActivity(intent)
     }
 }

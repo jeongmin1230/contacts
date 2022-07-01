@@ -37,8 +37,6 @@ class MainActivity : AppCompatActivity() {
         rvList.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         rvList.adapter = adapter
 
-
-
     }
 
 /* --------------------기능함수-------------------- */

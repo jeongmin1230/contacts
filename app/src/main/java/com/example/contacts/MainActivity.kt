@@ -82,24 +82,6 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    fun onClickRefresh(view: View) {
-        db.collection("contacts") // 작업할 컬렉션
-            .get() // 문서 가져오기
-            .addOnSuccessListener { result ->
-                // 성공할 경우
-                itemList.clear()
-                for(document in result) { // 가져온 문서들은 result 에 들어감
-                    val item = ListLayout(document["name"] as String)//, document["number"] as String)
-                    itemList.add(item)
-                }
-                adapter.notifyDataSetChanged() // 리사이클러 뷰 갱신
-            }
-            .addOnFailureListener { exception ->
-                // 실패할 경우
-                Log.d(TAG, "Error getting documents : $exception")
-            }
-    }
-
     fun onClickCall(view: View) {
 
         Log.d(TAG, "onClick Call ImageButton")

@@ -36,8 +36,7 @@
             android:id="@+id/registerBtnSave"
             style="?android:borderlessButtonStyle"
             android:textColor="#939292"
-            android:layout_weight="1"
-            android:onClick="onClickSave" />
+            android:layout_weight="1" />
 
     </LinearLayout>
 

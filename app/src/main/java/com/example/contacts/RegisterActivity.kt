@@ -37,17 +37,17 @@ class RegisterActivity : AppCompatActivity() {
                     imageUpload(uriPhoto!!)
                 }
             } else {
-                Log.d("ActivityResult", "something wrong")
+                Log.d("jeongmin", "something wrong")
             }
         }
     }
 /* 일반 함수 */
     // 파이어스토어에 이미지 업로드 하는 함수
     private fun imageUpload(uri : Uri) {
-        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        var registerEtNumberText = registerEtNumber.text.toString()
         var storage : FirebaseStorage? = FirebaseStorage.getInstance()
         // 파일 이름 생성
-        var fileName = "IMAGE_${timeStamp}.png"
+        var fileName = "profile_${registerEtNumberText}.png"
         var imagesRef = storage!!.reference.child(fileName)
         // 이미지 파일 업로드
         imagesRef.putFile(uri!!).addOnSuccessListener {
@@ -58,13 +58,13 @@ class RegisterActivity : AppCompatActivity() {
         }
     }
     // 번호 저장 함수
-    private fun saveNum() {
+    private fun saveNum() { // 이미지 설정 안하면 저장이 안돼요
         val data = hashMapOf(
             "name" to registerEtName.text.toString(),
             "number" to registerEtNumber.text.toString()
         )
-        db.collection("contacts") // 작업할 컬렉션
-            .add(data)
+        db.collection("contacts").document(registerEtNumber.text.toString()) // 작업할 컬렉션
+            .set(data)
             .addOnSuccessListener {
                 // 성공할경우
                 Toast.makeText(this, "데이터가 추가되었습니다.", Toast.LENGTH_SHORT).show()
@@ -78,25 +78,6 @@ class RegisterActivity : AppCompatActivity() {
         startActivity(intent)
     }
     /* onClick 함수 */
-    fun onClickSave(view: View) {
-//        val data = hashMapOf(
-//            "name" to registerEtName.text.toString(),
-//            "number" to registerEtNumber.text.toString()
-//        )
-//        db.collection("contacts") // 작업할 컬렉션
-//            .add(data)
-//            .addOnSuccessListener {
-//                // 성공할경우
-//                Toast.makeText(this, "데이터가 추가되었습니다.", Toast.LENGTH_SHORT).show()
-//            }
-//            .addOnFailureListener { exception ->
-//                // 실패할경우
-//                Log.d("jeongmin", "데이터 쓰기 실패 : $exception")
-//            }
-//        val intent = Intent(this, MainActivity::class.java)
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//        startActivity(intent)
-    }
     fun onClickCancel(view: View) {}
     fun onClickPick(view: View) {
         val intent : Intent = Intent(Intent.ACTION_PICK)

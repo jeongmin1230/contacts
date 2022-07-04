@@ -2,6 +2,7 @@ package com.example.contacts
 
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,8 +17,13 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.setPadding
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import kotlinx.android.synthetic.main.activity_detail.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.list_layout.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,7 +55,7 @@ class MainActivity : AppCompatActivity() {
                 // 성공할 경우
                 itemList.clear()
                 for(document in result) { // 가져온 문서들은 result 에 들어감
-                    val item = ListLayout(document["name"] as String)//, document["number"] as String)
+                    val item = ListLayout(document["name"] as String, document["number"] as String)
                     itemList.add(item)
                 }
                 adapter.notifyDataSetChanged() // 리사이클러 뷰 갱신
@@ -86,8 +92,5 @@ class MainActivity : AppCompatActivity() {
 
         Log.d(TAG, "onClick Call ImageButton")
 
-//        val intent = Intent(Intent.ACTION_DIAL)
-//        intent.data = Uri.parse("01086991406")
-//        startActivity(intent)
     }
 }

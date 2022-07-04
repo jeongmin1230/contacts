@@ -1,3 +1,4 @@
 package com.example.contacts
 
-class ListLayout (val name: String)//, val number: String)
+
+class ListLayout (val name: String, val number: String)

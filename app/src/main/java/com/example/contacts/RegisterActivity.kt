@@ -45,13 +45,16 @@ class RegisterActivity : AppCompatActivity() {
     // 파이어스토어에 이미지 업로드 하는 함수
     private fun imageUpload(uri : Uri) {
         var registerEtNumberText = registerEtNumber.text.toString()
+        var registerEtNameText = registerEtName.text.toString()
         var storage : FirebaseStorage? = FirebaseStorage.getInstance()
         // 파일 이름 생성
-        var fileName = "profile_${registerEtNumberText}.png"
+        var fileName = "profile_${registerEtNumberText}_${registerEtNameText}.png"
         var imagesRef = storage!!.reference.child(fileName)
         // 이미지 파일 업로드
         imagesRef.putFile(uri!!).addOnSuccessListener {
             Toast.makeText(this, "업로드 성공", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
         }.addOnFailureListener{
             println(it)
             Toast.makeText(this, "업로드 실패", Toast.LENGTH_SHORT).show()
@@ -63,7 +66,7 @@ class RegisterActivity : AppCompatActivity() {
             "name" to registerEtName.text.toString(),
             "number" to registerEtNumber.text.toString()
         )
-        db.collection("contacts").document(registerEtNumber.text.toString()) // 작업할 컬렉션
+        db.collection("contacts").document(registerEtNumber.text.toString() + "_" + registerEtName.text.toString()) // 작업할 컬렉션
             .set(data)
             .addOnSuccessListener {
                 // 성공할경우
@@ -74,10 +77,11 @@ class RegisterActivity : AppCompatActivity() {
                 Log.d("jeongmin", "데이터 쓰기 실패 : $exception")
             }
         val intent = Intent(this, MainActivity::class.java)
+        intent.putExtra("number", registerEtNumber.text.toString())
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
+//        startActivity(intent)
     }
-    /* onClick 함수 */
+/* onClick 함수 */
     fun onClickCancel(view: View) {}
     fun onClickPick(view: View) {
         val intent : Intent = Intent(Intent.ACTION_PICK)

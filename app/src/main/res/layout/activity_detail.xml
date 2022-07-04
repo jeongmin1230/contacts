@@ -36,7 +36,6 @@
         android:layout_height="100dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/basic"
-        android:background="@drawable/round_profile"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:id="@+id/detailIv" />
@@ -128,6 +127,7 @@
         android:text="010-0000-0000"
         android:textSize="20dp"
         android:textStyle="bold"
+        android:id="@+id/detailNumber"
         android:layout_marginLeft="20dp"
         android:layout_marginBottom="10dp"/>
 

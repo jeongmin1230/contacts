@@ -52,7 +52,6 @@
         android:layout_marginTop="50dp"
         android:src="@drawable/basic"
         android:onClick="onClickPick"
-        android:background="@drawable/round_profile"
         android:layout_gravity="center"
         android:layout_marginBottom="20dp"
         android:id="@+id/registerProfile" />

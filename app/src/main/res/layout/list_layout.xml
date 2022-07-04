@@ -11,7 +11,6 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:src="@drawable/basic"
-        android:background="@drawable/round_profile"
         android:id="@+id/listIv" />
 
     <TextView

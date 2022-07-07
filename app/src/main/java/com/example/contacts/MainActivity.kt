@@ -87,10 +87,4 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, RegisterActivity::class.java)
         startActivity(intent)
     }
-
-    fun onClickCall(view: View) {
-
-        Log.d(TAG, "onClick Call ImageButton")
-
-    }
 }

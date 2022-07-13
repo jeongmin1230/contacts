@@ -20,6 +20,8 @@ import kotlinx.android.synthetic.main.activity_register.*
 
 class Edit : AppCompatActivity() {
 
+    private val TAG : String = "jeongmin"
+
     private val OPEN_GALLERY = 1
     var uriPhoto : Uri? = null
     private val db = FirebaseFirestore.getInstance()    // Firestore 인스턴스 선언
@@ -40,7 +42,11 @@ class Edit : AppCompatActivity() {
             if(requestCode == OPEN_GALLERY) {
                 uriPhoto = data?.data
                 editProfile.setImageURI(uriPhoto)
+
                 editBtnSave.setOnClickListener {
+                    deleteNum()
+                    imageDelete(uriPhoto!!)
+
                     editNum()
                     imageUpload(uriPhoto!!)
                 }
@@ -84,7 +90,11 @@ class Edit : AppCompatActivity() {
             }
         }
     }
-    // 번호 수정 함수
+    // 기존 컬렉션 삭제 함수
+    private fun deleteNum() {
+        db.collection("contacts").document( intent.getStringExtra("number").toString() + "_" + intent.getStringExtra("name").toString()).delete()
+    }
+    // 삭제 후 컬렉션 새로 만들어 저장하는 함수
     private fun editNum() { // 이미지 설정 안하면 저장이 안돼요
         val data = hashMapOf(
             "name" to editEtName.text.toString(),
@@ -103,6 +113,28 @@ class Edit : AppCompatActivity() {
         val intent = Intent(this, MainActivity::class.java)
         intent.putExtra("number", editEtNumber.text.toString())
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+    }
+    // 기존 이미지 삭제 하는 함수
+    private fun imageDelete(uri : Uri) {
+//        var storage : FirebaseStorage? = FirebaseStorage.getInstance()
+//        val fileName = "profile_${intent.getStringExtra("number")}_${intent.getStringExtra("name")}.png"
+//
+//        val storageRef = storage?.reference
+//        val imageRef = storageRef?.child(fileName)
+//        imageRef?.delete()?.addOnSuccessListener {
+//            Log.d(TAG, "delete image")
+//        }?.addOnFailureListener {
+//            Log.d(TAG, "delete failed")
+//        }
+        val storage : FirebaseStorage = FirebaseStorage.getInstance("gs://contacts-857e9.appspot.com")
+        val storageReference = storage.reference
+        val pathReference = storageReference.child("/profile_${intent.getStringExtra("number")}_${intent.getStringExtra("name")}.png")
+
+        pathReference.delete().addOnSuccessListener {
+            Log.d(TAG, "success")
+        }.addOnFailureListener {
+            Log.d(TAG, "failed")
+        }
     }
 
     // 파이어스토어에 이미지 수정한거 업로드 하는 함수
@@ -132,6 +164,5 @@ class Edit : AppCompatActivity() {
 /* onClick 함수 */
     fun onClickCancel(view: View) {}
     fun onClickSave(view: View) {
-        editNum()
     }
 }
